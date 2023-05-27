@@ -1,2 +1,3 @@
 # serverless-boilerplate
-Use Across All New Projects
+Simple Serverless Setup
+Includes Git Workflows Actions YAML

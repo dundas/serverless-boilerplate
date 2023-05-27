@@ -1,0 +1,39 @@
+name: Deploy Lambda
+
+on:
+  push:
+    branches:
+      - example
+
+jobs:
+  deploy:
+    name: deploy
+
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [19.x]
+    steps:
+     
+
+      - uses: actions/checkout@v3
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node-version }}
+
+      - name: Install dependencies
+        run: yarn install
+
+      - name: Install Serverless Framework
+        run: yarn add serverless@latest
+      
+      
+      - name: Serverless AWS authentication
+        run: npx sls config credentials --provider aws --key ${{ secrets.AWS_ACCESS_ID }} --secret ${{ secrets.AWS_SECRET_KEY_SAFE }}
+      - name: Install NPM dependencies
+        run: yarn install
+
+      - name: Deploy
+        run: npx sls deploy
+      
