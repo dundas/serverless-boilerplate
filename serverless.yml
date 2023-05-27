@@ -12,7 +12,7 @@ provider:
   runtime: nodejs18.x
   region: ${opt:region, 'us-east-1'} # Set a default region
   deploymentBucket:
-    name: codeblocks-app-serverless
+    name: serverless-boilerplate
   apiGateway:
     minimumCompressionSize: 1024
     shouldStartNameWithService: true
@@ -35,3 +35,11 @@ custom:
     platform: node
     packager: 'yarn' # Packager that will be used to package your external modules
     concurrency: 10
+
+functions:
+  test:
+    handler: src/app.handler
+    events:
+      - http:
+          path: /test
+          method: GET
